@@ -7,11 +7,11 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Recruitment Task
+# Recruitment Project
 
 Simple Laravel project for recruitment purposes.
 
-### Installation
+## Installation
 ```bash
 git clone <repo-url>
 cd <project-folder>
@@ -27,7 +27,7 @@ php artisan migrate:fresh --seed
 ```
 Users are created via seeders, no registration needed.
 
-### Task 1 - Company Captains
+## Task - Company Captains
 
 Inspect how Avengers can be added/removed from Companies.
 
