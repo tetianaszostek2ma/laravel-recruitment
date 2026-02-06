@@ -15,6 +15,11 @@
                         {{ __('Dashboard') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('companies.*') ? 'active' : '' }}" href="{{ route('companies.index') }}">
+                        {{ __('Companies') }}
+                    </a>
+                </li>
             </ul>
 
             <ul class="navbar-nav">

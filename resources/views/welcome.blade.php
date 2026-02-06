@@ -58,7 +58,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 text-center">
                 <h1 class="display-3 fw-bold mb-4">
-                    Projekt Rekrutacyjny
+                    Avengers - Projekt Rekrutacyjny
                 </h1>
 
                 <p class="lead text-muted mb-4">
