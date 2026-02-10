@@ -24,7 +24,9 @@ class CompanyUserController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $company->users()->attach($request->user_id);
+        // check if user is first in company
+        $isFirst = $company->users()->count() === 0;
+        $company->users()->attach($request->user_id, ['is_captain' => $isFirst]);
 
         return redirect()->route('companies.users.index', $company)
             ->with('success', 'User assigned to company successfully.');
