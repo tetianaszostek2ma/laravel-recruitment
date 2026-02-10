@@ -49,4 +49,31 @@ class CompanyUserController extends Controller
         return redirect()->route('companies.users.index', $company)
             ->with('success', 'User removed from company successfully.');
     }
+
+    public function transferCaptain(Company $company, User $user)
+    {
+        $this->authorize('manageMembers', $company);
+
+        if (! $company->users()->where('user_id', $user->id)->exists()) {
+            return back()->with('error', 'Selected user is not a member of this company.');
+        }
+
+        $currentCaptain = $company->users()
+            ->wherePivot('is_captain', true)
+            ->first();
+
+        if (! $currentCaptain) {
+            return back()->with('error', 'This company has no captain assigned.');
+        }
+
+        $company->users()->updateExistingPivot($currentCaptain->id, [
+            'is_captain' => false,
+        ]);
+
+        $company->users()->updateExistingPivot($user->id, [
+            'is_captain' => true,
+        ]);
+
+        return back()->with('success', 'Captain role has been transferred.');
+    }
 }

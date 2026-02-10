@@ -69,6 +69,9 @@ class CompanyPolicy
      */
     public function manageMembers(User $user, Company $company)
     {
-        return $company->users()->wherePivot('is_captain', true)->where('users.id', $user->id)->exists();
+        return $company->users()
+        ->wherePivot('is_captain', true)
+        ->where('users.id', $user->id)
+        ->exists();
     }
 }

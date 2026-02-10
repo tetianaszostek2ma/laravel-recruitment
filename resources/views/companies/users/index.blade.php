@@ -27,7 +27,7 @@
 
             <!-- Formularz dodawania użytkownika -->
             <!--First user-->
-            @if ($company->users()->count() === 0)            
+            @if ($company->users()->count() === 0)
             <div class="card mb-4">
                 <div class="card-header">
                     <h5 class="mb-0">Assign User to Company</h5>
@@ -74,6 +74,9 @@
                                         @if($user->id === auth()->id())
                                         <span class="badge bg-info">You</span>
                                         @endif
+                                        @if($user->pivot->is_captain)
+                                        <span class="badge bg-light text-dark">Captain</span>
+                                        @endif
                                     </td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->pivot->created_at ? $user->pivot->created_at->format('Y-m-d H:i') : 'N/A' }}</td>
@@ -85,6 +88,19 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Remove this user from company?')">Remove</button>
                                         </form>
+                                        <!--Transfer captain-->
+                                        @if(!$user->pivot->is_captain)
+                                        <form action="{{ route('companies.users.transferCaptain', [$company, $user]) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-sm btn-warning"
+                                                onclick="return confirm('Make this user the new captain?')">
+                                                Make captain
+                                            </button>
+                                        </form>
+                                        @endif
+                                        @else
+                                        <span class="text-muted small">No permission</span>
                                         @endcan
                                         @else
                                         <span class="text-muted small">No permission</span>
