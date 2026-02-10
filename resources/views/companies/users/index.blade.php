@@ -103,9 +103,9 @@
                                         <form action="{{ route('companies.users.transferCaptain', [$company, $user]) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-sm btn-warning"
+                                            <button type="submit" class="btn btn-sm btn-outline-dark"
                                                 onclick="return confirm('Make this user the new captain?')">
-                                                Make captain
+                                                Set as Captain
                                             </button>
                                         </form>
                                         @endif
