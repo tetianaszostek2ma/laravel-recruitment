@@ -14,6 +14,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             @endif
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            @endif
+
 
             @php
             $isCompanyMember = auth()->user()->companies()->where('company_id', $company->id)->exists();
@@ -83,11 +90,14 @@
                                     <td>
                                         @if($isCompanyMember)
                                         @can('manageMembers', $company)
+                                        <!--The captain cannot remove themselves-->
+                                        @if($user->id !== auth()->id())
                                         <form action="{{ route('companies.users.detach', [$company, $user]) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Remove this user from company?')">Remove</button>
                                         </form>
+                                        @endif
                                         <!--Transfer captain-->
                                         @if(!$user->pivot->is_captain)
                                         <form action="{{ route('companies.users.transferCaptain', [$company, $user]) }}" method="POST" class="d-inline">

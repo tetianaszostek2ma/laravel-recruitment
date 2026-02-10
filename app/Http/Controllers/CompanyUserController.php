@@ -39,6 +39,10 @@ class CompanyUserController extends Controller
 
     public function detach(Company $company, User $user)
     {
+        if ($user->id === auth()->id()) {
+            return redirect()->route('companies.users.index', $company)
+            ->with('error', 'The captain cannot remove themselves.');
+        }
         // Sprawdź czy zalogowany user należy do tej firmy
         if (!auth()->user()->companies()->where('company_id', $company->id)->exists()) {
             abort(403, 'You must be a member of this company to remove users.');
