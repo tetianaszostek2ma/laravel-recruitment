@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,6 +21,10 @@ class CompanyUserController extends Controller
 
     public function attach(Request $request, Company $company)
     {
+        if ($company->users()->count() > 0) {
+            $this->authorize('manageMembers', $company);
+        }
+
         $request->validate([
             'user_id' => 'required|exists:users,id',
         ]);
